@@ -302,14 +302,14 @@ async function processMessage(text) {
         lastErr = data.error || 'unknown';
         if (attempt === MAX_RETRIES) {
           removeTyping();
-          addBotMessage('죄송해요, 일시적인 오류가 발생했어요. 다시 시도해주세요 🙏', false);
+          addBotMessage('죄송해요, 오류가 발생했어요 🙏(' + lastErr + ')', false);
         }
       }
     } catch (err) {
       lastErr = err.message;
       if (attempt === MAX_RETRIES) {
         removeTyping();
-        addBotMessage('연결에 문제가 생겼어요. 잠시 후 다시 시도해주세요 🙏', false);
+        addBotMessage('연결에 문제가 생겼어요 🙏(' + lastErr + ')', false);
       }
     }
   }
