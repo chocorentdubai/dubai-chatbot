@@ -299,7 +299,10 @@ async function processMessage(text) {
         updateQuickArea(suggestions);
         break;
       } else {
-        lastErr = data.error || 'unknown';
+        // data.error는 객체(object)이므로 message나 type 필드만 꺼내서 문자열로 사용
+        lastErr = (data.error && (data.error.message || data.error.type))
+          || `HTTP ${response.status}`;
+        console.error('API 에러 응답 전체:', data); // F12 콘솔에서 전체 내용 확인 가능
         if (attempt === MAX_RETRIES) {
           removeTyping();
           addBotMessage('죄송해요, 오류가 발생했어요 🙏(' + lastErr + ')', false);
@@ -307,6 +310,7 @@ async function processMessage(text) {
       }
     } catch (err) {
       lastErr = err.message;
+      console.error('네트워크/Fetch 에러:', err);
       if (attempt === MAX_RETRIES) {
         removeTyping();
         addBotMessage('연결에 문제가 생겼어요 🙏(' + lastErr + ')', false);
