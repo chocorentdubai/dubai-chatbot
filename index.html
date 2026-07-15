@@ -273,7 +273,7 @@ async function processMessage(text) {
   conversationHistory.push({ role: 'user', content: text });
   addTyping();
 
-  const MAX_RETRIES = 3;
+  const MAX_RETRIES = 5;
   let lastErr = null;
 
   for (let attempt = 1; attempt <= MAX_RETRIES; attempt++) {
